@@ -1,0 +1,2 @@
+export const SEARCH_PIA_SUCCESS = "SEARCH_PIA_SUCCESS";
+export const SEARCH_PIA_FAIL = "SEARCH_PIA_FAIL";
