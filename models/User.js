@@ -1,10 +1,9 @@
 const Sequelize = require("sequelize");
 
 const db = require("../config/database");
-const User = require("./User");
 
-const Driver = db.define(
-  "Conductores",
+const User = db.define(
+  "usuarios",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -32,7 +31,4 @@ const Driver = db.define(
   }
 );
 
-User.hasMany(Driver);
-Driver.belongsTo(User);
-
-module.exports = Driver;
+module.exports = User;

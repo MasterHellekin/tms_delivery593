@@ -1,27 +1,32 @@
 const Sequelize = require("Sequelize");
 
 const db = require("../config/database");
-const Admin = require("./Admin");
+const User = require("../models/User");
 
-const Provider = db.define("proveedores", {
-  id: {
-    type: Sequelize.STRING,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true,
+const Provider = db.define(
+  "proveedores",
+  {
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      allowNull: false,
+      primaryKey: true,
+    },
+    nombre: {
+      type: Sequelize.STRING,
+    },
+    email: {
+      type: Sequelize.STRING,
+    },
   },
-  nombre: {
-    type: Sequelize.STRING,
-  },
-  email: {
-    type: Sequelize.STRING,
-  },
-  password: {
-    type: Sequelize.STRING,
-  },
-});
+  {
+    timestamps: true,
+    createdAt: "createdAt",
+    updatedAt: false,
+  }
+);
 
-Admin.hasMany(Provider);
-Provider.belongsTo(Admin);
+User.hasMany(Provider);
+Provider.belongsTo(User);
 
 module.exports = Provider;

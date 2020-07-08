@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
 
-const adminsController = require("../../controllers/admins");
+const usersController = require("../../controllers/users");
 
 router.post(
-  "/register-admin",
+  "/register",
   [
     check("nombre", "El nombre es requerido").not().isEmpty(),
     check("email", "Incluya un email válido").isEmail(),
@@ -14,6 +14,6 @@ router.post(
       "Ingrese una constraseña con más de 6 caractéres"
     ).isLength({ min: 6 }),
   ],
-  adminsController.postRegisterAdmin
+  usersController.postRegisterUser
 );
 module.exports = router;

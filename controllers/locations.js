@@ -6,10 +6,10 @@ exports.getLocationByPia = async (req, res, next) => {
   try {
     const piaId = req.params.id;
     const pia = await Location.sequelize.query(
-      `SELECT id FROM pia WHERE pedido_pia=${piaId}`,
+      `SELECT id FROM pia WHERE pedidoPia=${piaId}`,
       { type: QueryTypes.SELECT }
     );
-    pia_id = pia[0].id;
+    const pia_id = pia[0].id;
     const location = await Location.findOne({ where: { piaId: pia_id } });
     res.json(location);
   } catch (err) {

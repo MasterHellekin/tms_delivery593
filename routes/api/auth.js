@@ -5,12 +5,21 @@ const { check } = require("express-validator");
 const authController = require("../../controllers/auth");
 
 router.post(
-  "/login-admin",
+  "/admin/login",
   [
     check("email", "Ingrese un correo electrónico válido").isEmail(),
     check("password", "Ingrese una contraseña").exists(),
   ],
-  authController.postLoginAdmin
+  authController.postLoginUser
+);
+
+router.post(
+  "/driver/login",
+  [
+    check("email", "Ingrese un correo electrónico válido").isEmail(),
+    check("password", "Ingrese una contraseña").exists(),
+  ],
+  authController.postLoginDriver
 );
 
 module.exports = router;

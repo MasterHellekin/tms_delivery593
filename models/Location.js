@@ -11,28 +11,28 @@ const Location = db.define(
       allowNull: false,
       primaryKey: true,
     },
-    fec_sal: {
+    fecSalida: {
       type: Sequelize.DATE,
     },
-    dir_sal: {
+    dirSalida: {
       type: Sequelize.STRING,
     },
-    lat_sal: {
+    latSalida: {
       type: Sequelize.FLOAT,
     },
-    lon_sal: {
+    lonSalida: {
       type: Sequelize.FLOAT,
     },
-    fec_lle: {
+    fecLlegada: {
       type: Sequelize.STRING,
     },
-    dir_lle: {
+    dirLlegada: {
       type: Sequelize.STRING,
     },
-    lat_lle: {
+    latLlegada: {
       type: Sequelize.FLOAT,
     },
-    lon_lle: {
+    lonLlegada: {
       type: Sequelize.FLOAT,
     },
     piaId: {

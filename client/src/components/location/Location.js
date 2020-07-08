@@ -29,7 +29,7 @@ const Location = ({ searchByPia, match, search: { loading, pia } }) => {
                       <strong>
                         <h5>
                           Fecha de salida:{" "}
-                          <Moment format="DD-MM-YYYY">{pia.fec_sal}</Moment>
+                          <Moment format="DD-MM-YYYY">{pia.fecSalida}</Moment>
                         </h5>
                       </strong>
                     </div>
@@ -37,7 +37,7 @@ const Location = ({ searchByPia, match, search: { loading, pia } }) => {
                   <div className="card-body text-dark">
                     <div className="form-group d-flex border-bottom border-primary">
                       <strong>
-                        <h5>Dirección de salida: {pia.dir_sal}</h5>
+                        <h5>Dirección de salida: {pia.dirSalida}</h5>
                       </strong>
                     </div>
                   </div>
@@ -46,7 +46,7 @@ const Location = ({ searchByPia, match, search: { loading, pia } }) => {
                       <strong>
                         <h5>
                           Fecha de llegada:{" "}
-                          <Moment format="DD-MM-YYYY">{pia.fec_lle}</Moment>
+                          <Moment format="DD-MM-YYYY">{pia.fecLlegada}</Moment>
                         </h5>
                       </strong>
                     </div>
@@ -54,7 +54,7 @@ const Location = ({ searchByPia, match, search: { loading, pia } }) => {
                   <div className="card-body text-dark">
                     <div className="form-group d-flex border-bottom border-primary">
                       <strong>
-                        <h5>Dirección de llegada: {pia.dir_lle}</h5>
+                        <h5>Dirección de llegada: {pia.dirLlegada}</h5>
                       </strong>
                     </div>
                   </div>
@@ -62,16 +62,16 @@ const Location = ({ searchByPia, match, search: { loading, pia } }) => {
               </div>
 
               <div className="col-sm-6">
-                <Map center={[pia.lat_sal, pia.lon_sal]} zoom={12}>
+                <Map center={[pia.latSalida, pia.lonSalida]} zoom={12}>
                   <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                   />
-                  <Marker position={[pia.lat_sal, pia.lon_sal]}>
-                    <Popup>Lugar de salida: {pia.dir_sal}</Popup>
+                  <Marker position={[pia.latSalida, pia.lonSalida]}>
+                    <Popup>Lugar de salida: {pia.dirSalida}</Popup>
                   </Marker>
-                  <Marker position={[pia.lat_lle, pia.lon_lle]}>
-                    <Popup>Lugar de llegada: {pia.dir_lle}</Popup>
+                  <Marker position={[pia.latLlegada, pia.lonLlegada]}>
+                    <Popup>Lugar de llegada: {pia.dirLlegada}</Popup>
                   </Marker>
                 </Map>
               </div>

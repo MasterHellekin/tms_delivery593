@@ -3,7 +3,7 @@ const router = express.Router();
 const { check } = require("express-validator");
 
 const auth = require("../../middleware/auth");
-const providersController = require("../../controllers/providers");
+const driversController = require("../../controllers/drivers");
 
 router.post(
   "/register",
@@ -12,9 +12,13 @@ router.post(
     [
       check("nombre", "El nombre es requerido").not().isEmpty(),
       check("email", "Incluya un email válido").isEmail(),
+      check(
+        "password",
+        "Ingrese una contraseña de más de 6 caractéres"
+      ).isLength({ min: 6 }),
     ],
   ],
-  providersController.postRegisterProvider
+  driversController.postRegisterDriver
 );
 
 module.exports = router;
