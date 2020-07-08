@@ -1,7 +1,7 @@
 {
     "dbname": "tms_delivery593",
-    "dbuser": "root",
-    "dbpassword": "",
+    "dbuser": "c_delevoper",
+    "dbpassword": "r!e7B1h1",
     "host": "localhost",
     "jwtSecret": "mysecrettoken"
   }
