@@ -12,7 +12,7 @@ const Provider = db.define(
       allowNull: false,
       primaryKey: true,
     },
-    nombre: {
+    nomPro: {
       type: Sequelize.STRING,
     },
     email: {

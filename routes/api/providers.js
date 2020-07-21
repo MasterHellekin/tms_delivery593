@@ -10,11 +10,13 @@ router.post(
   [
     auth,
     [
-      check("nombre", "El nombre es requerido").not().isEmpty(),
+      check("nomPro", "El nombre es requerido").not().isEmpty(),
       check("email", "Incluya un email válido").isEmail(),
     ],
   ],
   providersController.postRegisterProvider
 );
+
+router.get("/providers", auth, providersController.getProvidersByUser);
 
 module.exports = router;

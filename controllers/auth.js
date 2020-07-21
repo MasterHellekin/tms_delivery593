@@ -6,6 +6,16 @@ const { validationResult } = require("express-validator");
 const User = require("../models/User");
 const Driver = require("../models/Driver");
 
+exports.getUser = async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.user.id);
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
 exports.postLoginUser = async (req, res, next) => {
   const errors = validationResult(req);
 
@@ -53,6 +63,16 @@ exports.postLoginUser = async (req, res, next) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ msg: "Error del servidor" });
+  }
+};
+
+exports.getDriver = async (req, res, next) => {
+  try {
+    const driver = await Driver.findByPk(req.user.id);
+    res.json(driver);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
   }
 };
 

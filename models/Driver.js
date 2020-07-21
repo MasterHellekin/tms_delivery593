@@ -4,7 +4,7 @@ const db = require("../config/database");
 const User = require("./User");
 
 const Driver = db.define(
-  "Conductores",
+  "conductores",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -12,7 +12,7 @@ const Driver = db.define(
       allowNull: false,
       primaryKey: true,
     },
-    nombre: {
+    nomCon: {
       type: Sequelize.STRING,
     },
     email: {

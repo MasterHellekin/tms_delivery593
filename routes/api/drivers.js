@@ -10,7 +10,7 @@ router.post(
   [
     auth,
     [
-      check("nombre", "El nombre es requerido").not().isEmpty(),
+      check("nomCon", "El nombre es requerido").not().isEmpty(),
       check("email", "Incluya un email válido").isEmail(),
       check(
         "password",
@@ -20,5 +20,7 @@ router.post(
   ],
   driversController.postRegisterDriver
 );
+
+router.get("/drivers", auth, driversController.getDriversByUser);
 
 module.exports = router;

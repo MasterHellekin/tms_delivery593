@@ -1,8 +1,10 @@
 const Sequelize = require("sequelize");
 
 const db = require("../config/database");
+const User = require("./User");
+const Vehicle = require("./Vehicle");
+const Driver = require("./Driver");
 const Client = require("./Client");
-const Provider = require("./Provider");
 
 const Pia = db.define(
   "pia",
@@ -13,7 +15,31 @@ const Pia = db.define(
       allowNull: false,
       primaryKey: true,
     },
-    pedido: {
+    pedidoPia: {
+      type: Sequelize.STRING,
+    },
+    pedidoCliente: {
+      type: Sequelize.STRING,
+    },
+    descripcion: {
+      type: Sequelize.STRING,
+    },
+    fecSalida: {
+      type: Sequelize.DATE,
+    },
+    fecLlegada: {
+      type: Sequelize.DATE,
+    },
+    dirLlegada: {
+      type: Sequelize.STRING,
+    },
+    latLlegada: {
+      type: Sequelize.FLOAT,
+    },
+    lonLlegada: {
+      type: Sequelize.FLOAT,
+    },
+    estado: {
       type: Sequelize.STRING,
     },
   },
@@ -22,9 +48,13 @@ const Pia = db.define(
   }
 );
 
+User.hasMany(Pia);
+Pia.belongsTo(User);
+Vehicle.hasMany(Pia);
+Pia.belongsTo(Vehicle);
+Driver.hasMany(Pia);
+Pia.belongsTo(Driver);
 Client.hasMany(Pia);
 Pia.belongsTo(Client);
-Provider.hasMany(Pia);
-Pia.belongsTo(Provider);
 
 module.exports = Pia;
