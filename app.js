@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+var cors = require("cors");
 
 // Initializations
 const db = require("./config/database");
@@ -17,6 +18,8 @@ const app = express();
 db.authenticate()
   .then(() => console.log("Connection has been established successfully."))
   .catch((err) => console.error("Unable to connect to the database:", err));
+
+app.use(cors());
 
 // Middleware
 app.use(express.json({ extended: false }));
@@ -40,6 +43,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));

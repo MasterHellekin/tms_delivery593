@@ -1,26 +1,16 @@
+import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Map, TileLayer } from "react-leaflet";
-import L from "leaflet";
-import { geosearch } from "esri-leaflet-geocoder";
-
+import { Map, TileLayer, Marker, Popup, withLeaflet } from "react-leaflet";
+import { SearchControl, OpenStreetMapProvider } from "react-leaflet-geosearch";
 import { addPiaUser } from "../../../actions/search";
 import { getDriversByUser } from "../../../actions/driver";
 import { getClientsByUser } from "../../../actions/client";
 import { getVehiclesByUser } from "../../../actions/vehicle";
 
-import "esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css";
-
-delete L.Icon.Default.prototype._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon-2x.png",
-  iconUrl: "https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.4.0/dist/images/marker-shadow.png",
-});
+import "../../../../node_modules/leaflet-geosearch/dist/style.css";
 
 const AddPia = ({
   addPiaUser,
@@ -32,39 +22,13 @@ const AddPia = ({
   vehicle: { vehicles },
   history,
 }) => {
-  const mapRef = useRef();
-  let lat = useRef();
-  let lon = useRef();
-
   useEffect(() => {
     getDriversByUser();
     getClientsByUser();
     getVehiclesByUser();
-
-    const { current = {} } = mapRef;
-    const { leafletElement: map } = current;
-
-    const control = geosearch();
-    control.addTo(map);
-
-    const results = new L.LayerGroup().addTo(map);
-
-    control.on("results", function (data) {
-      results.clearLayers();
-      for (let i = data.results.length - 1; i >= 0; i--) {
-        results.addLayer(L.marker(data.results[i].latlng));
-        lat.current = data.results[i].latlng.lat;
-        lon.current = data.results[i].latlng.lng;
-      }
-    });
-
-    map.locate(
-      {
-        setView: true,
-      },
-      []
-    );
   }, [getDriversByUser, getClientsByUser, getVehiclesByUser]);
+
+  const mark = useRef(null);
 
   const [formData, setFormData] = useState({
     pedidoPia: "",
@@ -72,12 +36,20 @@ const AddPia = ({
     descripcion: "",
     fecLlegada: "",
     dirLlegada: "",
-    latLlegada: lat.current,
-    lonLlegada: lon.current,
+    latLlegada: "",
+    lonLlegada: "",
     estado: "",
     vehiculoId: "",
     conductoreId: "",
     clienteId: "",
+  });
+
+  const [location, setLocation] = useState({
+    dirLlegada: "Ambato",
+    center: { lat: -1.24908, lng: -78.61675 },
+    position: { lat: -1.24908, lng: -78.61675 },
+    zoom: 15,
+    draggable: true,
   });
 
   const {
@@ -100,22 +72,69 @@ const AddPia = ({
       [e.target.name]: e.target.value,
     });
 
-  const onChangeLatitudeHandler = (e) =>
-    setFormData({
-      ...formData,
-      [e.target.name]: lat.current,
-    });
-
-  const onChangeLongitudeHandler = (e) =>
-    setFormData({
-      ...formData,
-      [e.target.name]: lon.current,
-    });
-
   const onSubmitHandler = (e) => {
     e.preventDefault();
     addPiaUser(formData, history);
   };
+
+  const toggleDraggableHandler = () => {
+    setLocation({
+      ...location,
+      draggable: !location.draggable,
+    });
+  };
+
+  async function getLabelHandler(latitude, longitude) {
+    const res = await axios.get(
+      `https://us1.locationiq.com/v1/reverse.php?key=82681b92e48e69&lat=${latitude}&lon=${longitude}&format=json`
+    );
+
+    const name = res.data.display_name;
+    console.log(name);
+    return name;
+  }
+
+  async function updatePositionHandler() {
+    const marker = mark.current;
+    // if (marker != null) {
+    const name = await getLabelHandler(
+      marker.leafletElement.getLatLng().lat,
+      marker.leafletElement.getLatLng().lng
+    );
+
+    console.log(name);
+    console.log(marker);
+
+    try {
+      setLocation({
+        ...location,
+        dirLlegada: name,
+        position: marker.leafletElement.getLatLng(),
+      });
+
+      setFormData({
+        ...formData,
+        dirLlegada:name,
+        latLlegada: marker.leafletElement.getLatLng().lat,
+        lonLlegada: marker.leafletElement.getLatLng().lng,
+      });
+    } catch (err) {}
+    // }
+  }
+
+  const updateBySearchHandler = (res) => {
+    console.log(res);
+    setLocation({
+      ...location,
+      dirLlegada: res.label,
+      position: { lat: res.y, lng: res.x },
+    });
+  };
+
+  const prov = OpenStreetMapProvider();
+  const GeoSearchControlElement = withLeaflet(SearchControl);
+  const center = [location.center.lat, location.center.lng];
+  const position = [location.position.lat, location.position.lng];
 
   return (
     <div className="container p-4">
@@ -167,10 +186,35 @@ const AddPia = ({
                   />
                 </div>
                 <div className="form-group text-dark">
-                  <Map ref={mapRef} center={[0, 0]} zoom={16}>
+                  <Map center={center} zoom={location.zoom} zoomControl={true}>
                     <TileLayer
                       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                       attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    <Marker
+                      ref={mark}
+                      draggable={location.draggable}
+                      ondragend={() => updatePositionHandler()}
+                      position={position}
+                    >
+                      <Popup minWidth={90}>
+                        {`${location.position.lat} + ${location.position.lng}`}
+                        <span onClick={() => toggleDraggableHandler()}></span>
+                      </Popup>
+                    </Marker>
+                    <GeoSearchControlElement
+                      provider={prov}
+                      showMarker={false}
+                      showPopup={false}
+                      popupFormat={({ query, result }) =>
+                        updateBySearchHandler(result)
+                      }
+                      maxMarkers={1}
+                      retainZoomLevel={false}
+                      animateZoom={true}
+                      autoClose={true}
+                      searchLabel={"Ingrese una dirección"}
+                      keepResult={true}
                     />
                   </Map>
                 </div>
@@ -187,23 +231,23 @@ const AddPia = ({
                 <div className="form-group">
                   <input
                     type="text"
-                    ref={lat}
+                    // ref={lat}
                     name="latLlegada"
                     value={latLlegada}
                     className="form-control"
                     placeholder="Presione cualquier tecla para continuar"
-                    onChange={(e) => onChangeLatitudeHandler(e)}
+                    onChange={(e) => onChangeHandler(e)}
                   />
                 </div>
                 <div className="form-group">
                   <input
                     type="text"
-                    ref={lon}
+                    // ref={lon}
                     name="lonLlegada"
                     value={lonLlegada}
                     className="form-control"
                     placeholder="Presione cualquier tecla para continuar"
-                    onChange={(e) => onChangeLongitudeHandler(e)}
+                    onChange={(e) => onChangeHandler(e)}
                   />
                 </div>
                 <div className="form-group">
@@ -265,10 +309,7 @@ const AddPia = ({
                   </select>
                 </div>
                 <div className="form-group">
-                  <button
-                    className="btn btn-primary btn-block"
-                    type="submit"
-                  >
+                  <button className="btn btn-primary btn-block" type="submit">
                     Guardar
                   </button>
                 </div>
