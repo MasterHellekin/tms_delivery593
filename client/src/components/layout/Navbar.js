@@ -169,7 +169,8 @@ const Navbar = ({ auth: { isAuthenticated, loading, role }, logout }) => {
       >
         <div className="container">
           <Link to="/" className="navbar-brand">
-            <strong>Delivery 593</strong>
+            <img src="/img/delivery593logo.png" width="50" height="50" alt="" />
+            <strong className="text-secondary">Delivery 593</strong>
           </Link>
           <button
             className="navbar-toggler"

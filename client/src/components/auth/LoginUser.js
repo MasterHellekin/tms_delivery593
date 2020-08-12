@@ -32,7 +32,7 @@ const LoginUser = ({ loginUser, isAuthenticated, role }) => {
         <div className="container">
           <div className="row text-center">
             <div className="col-md-8 m-auto">
-              <div className="card bg-primary">
+              <div className="card bg-primary text-secondary">
                 <div className="card-header">
                   <h3>Ingreso de Gerentes</h3>
                 </div>

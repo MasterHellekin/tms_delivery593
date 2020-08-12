@@ -1,7 +1,7 @@
 {
-    "dbname": "tms_delivery593",
-    "dbuser": "c_developer",
-    "dbpassword": "p9M@a80y",
-    "host": "198.251.69.135",
-    "jwtSecret": "mysecrettoken"
-  }
+  "dbname": "tms_delivery593",
+  "dbuser": "c_developer",
+  "dbpassword": "p9M@a80y",
+  "host": "198.251.69.135",
+  "jwtSecret": "mysecrettoken"
+}

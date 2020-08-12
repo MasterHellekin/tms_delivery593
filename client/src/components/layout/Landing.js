@@ -22,7 +22,7 @@ const Landing = () => {
           <h1 className="text-primary">
             <strong>Delivery 593</strong>
           </h1>
-          <p className="lead">Ingrese el número de PIA</p>
+          <p className="lead text-primary">Ingrese el número de PIA</p>
           <form
             className="form-inline my-2 my-lg-0 d-flex justify-content-center"
             onSubmit={(e) => onSubmitHandler(e)}

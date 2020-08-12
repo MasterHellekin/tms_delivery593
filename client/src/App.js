@@ -28,6 +28,7 @@ import { loadUser, loadDriver } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 
 import "./App.css";
+import "./bootstrap.css";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);

@@ -32,7 +32,7 @@ const LoginDriver = ({ loginDriver, isAuthenticated, role }) => {
         <div className="container">
           <div className="row text-center">
             <div className="col-md-8 m-auto">
-              <div className="card bg-primary">
+              <div className="card bg-primary text-secondary">
                 <div className="card-header">
                   <h3>Ingreso de Conductores</h3>
                 </div>

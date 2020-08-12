@@ -45,7 +45,7 @@ const AddClient = ({ addClientByUser, history }) => {
         <div className="row text-center">
           <div className="col">
             <div className="card">
-              <div className="card-header bg-primary">
+              <div className="card-header bg-primary text-secondary">
                 <h3>Registrar nuevo cliente</h3>
               </div>
               <div className="card-body">

@@ -1,18 +1,16 @@
 body {
   background: #333;
-  color: #fff;
 }
 
 .navbar {
-  border-bottom: #008ed6 3px solid;
-  opacity: 0.8;
+  border-bottom: #ffcd79 3px solid;
 }
 
 /* Landing Page */
 .landing {
   position: relative;
   background: url("./img/showcase.jpg") no-repeat center center/cover;
-  height: 91vh;
+  height: 100vh;
 }
 
 .landing-inner {
@@ -29,7 +27,7 @@ body {
 
 /* Overlay */
 .dark-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 205, 121, 0.4);
   position: absolute;
   top: 0;
   left: 0;
