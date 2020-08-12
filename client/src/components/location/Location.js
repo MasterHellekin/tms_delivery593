@@ -20,9 +20,9 @@ const Location = ({ searchByPia, match, search: { loading, pia } }) => {
       ) : pia === null || pia.length === 0 ? (
         <Fragment>
           <div className="container p-4">
-            <div class="jumbotron bg-dark p-4">
-              <h1 class="display-4">Número PIA no encontrado</h1>
-              <p class="lead">
+            <div class="jumbotron bg-primary p-4">
+              <h1 class="display-4 text-secondary">Número PIA no encontrado</h1>
+              <p class="lead text-secondary">
                 Al parecer el número PIA no existe o no ha sido ingresado en el
                 sistema, vuelva a intentarlo más tarde o llame al administrador
               </p>
@@ -38,7 +38,7 @@ const Location = ({ searchByPia, match, search: { loading, pia } }) => {
             <div className="row">
               <div className="col-sm-6">
                 <div className="card card-form">
-                  <div className="card-header bg-primary text-center">
+                  <div className="card-header bg-primary text-center text-secondary">
                     <h1>Detalle de su pedido</h1>
                   </div>
                   <div className="card-body text-dark">
