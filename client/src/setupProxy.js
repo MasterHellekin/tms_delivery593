@@ -10,7 +10,7 @@ module.exports = function (app) {
   );
   app.use(
     createProxyMiddleware("/v1", {
-      target: "https://us1.locationiq.com/",
+      target: "https://us1.locationiq.com",
       secure: false,
       changeOrigin: true,
     })
