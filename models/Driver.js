@@ -24,6 +24,12 @@ const Driver = db.define(
     rol: {
       type: Sequelize.STRING,
     },
+    ultLatitud: {
+      type: Sequelize.FLOAT,
+    },
+    ultLongitud: {
+      type: Sequelize.FLOAT,
+    },
   },
   {
     timestamps: true,

@@ -19,6 +19,7 @@ import AddClient from "./components/user/client/AddClient";
 import ShowVehicles from "./components/user/vehicle/ShowVehicles";
 import AddVehicle from "./components/user/vehicle/AddVehicle";
 import ShowDrivers from "./components/driver/ShowDrivers";
+import ShowMapDriver from "./components/driver/ShowMapDrivers";
 import AddDriver from "./components/driver/AddDriver";
 import Locations from "./components/driver/locations/Locations";
 import PrivateRoute from "./components/routing/PrivateRoute";
@@ -97,6 +98,11 @@ const App = () => {
                 exact
                 path="/user/drivers"
                 component={ShowDrivers}
+              />
+              <PrivateRoute
+                exact
+                path="/user/map-drivers"
+                component={ShowMapDriver}
               />
               <PrivateRoute
                 exact

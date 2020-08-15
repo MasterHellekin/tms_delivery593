@@ -26,6 +26,9 @@ const Navbar = ({ auth: { isAuthenticated, loading, role }, logout }) => {
           <Link className="dropdown-item" to="/user/drivers">
             Mostrar conductores
           </Link>
+          <Link className="dropdown-item" to="/user/map-drivers">
+            Mostrar conductores en mapa
+          </Link>
         </div>
       </li>
       <li className="nav-item dropdown">

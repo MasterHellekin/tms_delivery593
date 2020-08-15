@@ -1,8 +1,0 @@
-{
-    "dbname": "tms_delivery593",
-    "dbuser": "root",
-    "dbpassword": "",
-    "host": "localhost",
-    "jwtSecret": "mysecrettoken"
-  }
-  
