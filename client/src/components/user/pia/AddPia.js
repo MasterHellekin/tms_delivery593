@@ -88,7 +88,7 @@ const AddPia = ({
     const res = await axios.get(
       `/v1/reverse.php?key=82681b92e48e69&lat=${latitude}&lon=${longitude}&format=json`
     );
-
+    console.log(res);
     const name = res.data.display_name;
     return name;
   }
