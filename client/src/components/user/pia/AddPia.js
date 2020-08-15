@@ -90,40 +90,35 @@ const AddPia = ({
     );
 
     const name = res.data.display_name;
-    console.log(name);
     return name;
   }
 
   async function updatePositionHandler() {
     const marker = mark.current;
-    // if (marker != null) {
-    const name = await getLabelHandler(
-      marker.leafletElement.getLatLng().lat,
-      marker.leafletElement.getLatLng().lng
-    );
+    if (marker != null) {
+      const name = await getLabelHandler(
+        marker.leafletElement.getLatLng().lat,
+        marker.leafletElement.getLatLng().lng
+      );
 
-    console.log(name);
-    console.log(marker);
+      try {
+        setLocation({
+          ...location,
+          dirLlegada: name,
+          position: marker.leafletElement.getLatLng(),
+        });
 
-    try {
-      setLocation({
-        ...location,
-        dirLlegada: name,
-        position: marker.leafletElement.getLatLng(),
-      });
-
-      setFormData({
-        ...formData,
-        dirLlegada: name,
-        latLlegada: marker.leafletElement.getLatLng().lat,
-        lonLlegada: marker.leafletElement.getLatLng().lng,
-      });
-    } catch (err) {}
-    // }
+        setFormData({
+          ...formData,
+          dirLlegada: name,
+          latLlegada: marker.leafletElement.getLatLng().lat,
+          lonLlegada: marker.leafletElement.getLatLng().lng,
+        });
+      } catch (err) {}
+    }
   }
 
   const updateBySearchHandler = (res) => {
-    console.log(res);
     setLocation({
       ...location,
       dirLlegada: res.label,
