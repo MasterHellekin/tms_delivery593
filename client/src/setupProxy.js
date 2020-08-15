@@ -8,11 +8,11 @@ module.exports = function (app) {
       changeOrigin: true,
     })
   );
-  // app.use(
-  //   createProxyMiddleware("/v1", {
-  //     target: "https://us1.locationiq.com",
-  //     secure: false,
-  //     changeOrigin: true,
-  //   })
-  // );
+  app.use(
+    createProxyMiddleware("/v1", {
+      target: "https://us1.locationiq.com",
+      secure: false,
+      changeOrigin: true,
+    })
+  );
 };
