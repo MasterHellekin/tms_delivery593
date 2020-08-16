@@ -7,12 +7,14 @@ import driver from "./driver";
 import client from "./client";
 import vehicle from "./vehicle";
 import provider from "./provider";
+import user from "./user";
 
 export default combineReducers({
   alert,
   auth,
   search,
   driver,
+  user,
   client,
   vehicle,
   provider,

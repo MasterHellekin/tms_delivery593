@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Alert from "./components/layout/Alert";
+import AddUser from "./components/user/AddUser";
 import LoginUser from "./components/auth/LoginUser";
 import LoginDriver from "./components/auth/LoginDriver";
 import DashboardUser from "./components/user/dashboard/Dashboard";
@@ -55,6 +56,7 @@ const App = () => {
           <section className="container">
             <Alert />
             <Switch>
+              <Route exact path="/user/register" component={AddUser} />
               <Route exact path="/user/login" component={LoginUser} />
               <Route exact path="/driver/login" component={LoginDriver} />
               <PrivateRoute

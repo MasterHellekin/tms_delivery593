@@ -17,7 +17,7 @@ exports.postRegisterUser = async (req, res, next) => {
 
   try {
     let option = await Option.findByPk(1);
-    let user = await User.findOne({ where: email });
+    let user = await User.findOne({ where: { email } });
 
     if (option.canRegister >= 1) {
       if (user) {
