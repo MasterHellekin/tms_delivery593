@@ -13,6 +13,8 @@ exports.postRegisterDriver = async (req, res, next) => {
 
   let { nomCon, email, password } = req.body;
   const rol = "driver";
+  const ultLatitud = 0;
+  const ultLongitud = 0;
 
   try {
     let driver = await Driver.findOne({ where: { email } });
@@ -35,6 +37,8 @@ exports.postRegisterDriver = async (req, res, next) => {
       email,
       password,
       rol,
+      ultLatitud,
+      ultLongitud,
       usuarioId,
     });
 
@@ -48,6 +52,21 @@ exports.postRegisterDriver = async (req, res, next) => {
 exports.getDriversByUser = async (req, res, next) => {
   try {
     const driver = await Driver.findAll({ where: { usuarioId: req.user.id } });
+    res.json(driver);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: "Error del servidor" });
+  }
+};
+
+exports.putDriverLocation = async (req, res, next) => {
+  let { ultLatitud, ultLongitud } = req.body;
+  let id = req.params.id;
+  try {
+    const driver = await Driver.update(
+      { ultLatitud, ultLongitud },
+      { where: { id } }
+    );
     res.json(driver);
   } catch (err) {
     console.error(err.message);

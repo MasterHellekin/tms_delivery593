@@ -23,4 +23,6 @@ router.post(
 
 router.get("/drivers", auth, driversController.getDriversByUser);
 
+router.put("/:id", auth, driversController.putDriverLocation);
+
 module.exports = router;

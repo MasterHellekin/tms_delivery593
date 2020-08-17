@@ -4,11 +4,13 @@ import { connect } from "react-redux";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 
 import { getPiaByDriver, updatePiaStatus } from "../../../actions/search";
+import { updateDriverLocation } from "../../../actions/driver";
 import Spinner from "../../layout/Spinner";
 
 const Locations = ({
   getPiaByDriver,
   updatePiaStatus,
+  updateDriverLocation,
   search: { loading, pias },
   history,
 }) => {
@@ -18,9 +20,11 @@ const Locations = ({
 
   const [formData, setFormData] = useState({
     estado: "",
+    ultLatitud: "",
+    ultLongitud: "",
   });
 
-  const { estado } = formData;
+  const { estado, ultLatitud, ultLongitud } = formData;
 
   const onChangeHandler = (e) =>
     setFormData({
@@ -28,8 +32,9 @@ const Locations = ({
       [e.target.name]: e.target.value,
     });
 
-  const onSubmitHandler = (e, id) => {
+  const onSubmitHandler = (e, id, driverId) => {
     e.preventDefault();
+    updateDriverLocation(driverId, formData);
     updatePiaStatus(id, formData, history);
     window.location.reload(false);
   };
@@ -48,7 +53,11 @@ const Locations = ({
             {pias.map((pia) => (
               <Marker key={pia.id} position={[pia.latLlegada, pia.lonLlegada]}>
                 <Popup className="custom">
-                  <form onSubmit={(e) => onSubmitHandler(e, pia.id)}>
+                  <form
+                    onSubmit={(e) =>
+                      onSubmitHandler(e, pia.id, pia.conductoreId)
+                    }
+                  >
                     <div className="form-row">
                       <div className="col form-group">
                         <label htmlFor="pedidoPia">
@@ -68,6 +77,49 @@ const Locations = ({
                         </label>
                       </div>
                     </div>
+
+                    <div className="form-row">
+                      <div className="col form-group">
+                        <div className="input-group input-group-sm mb-3">
+                          <div className="input-group-prepend"></div>
+                          <select
+                            name="ultLatitud"
+                            className="custom-select"
+                            value={ultLatitud}
+                            onChange={(e) => onChangeHandler(e)}
+                          >
+                            <option key="0" value="">
+                              * Escoja su latitud
+                            </option>
+                            <option key="1" value={pia.latLlegada}>
+                              {pia.latLlegada}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-row">
+                      <div className="col form-group">
+                        <div className="input-group input-group-sm mb-3">
+                          <div className="input-group-prepend"></div>
+                          <select
+                            name="ultLongitud"
+                            className="custom-select"
+                            value={ultLongitud}
+                            onChange={(e) => onChangeHandler(e)}
+                          >
+                            <option key="0" value="">
+                              * Escoja su longitud
+                            </option>
+                            <option key="1" value={pia.lonLlegada}>
+                              {pia.lonLlegada}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="form-row">
                       <div className="col form-group">
                         <div className="input-group input-group-sm mb-3">
@@ -118,6 +170,7 @@ const Locations = ({
 Locations.propTypes = {
   getPiaByDriver: PropTypes.func.isRequired,
   updatePiaStatus: PropTypes.func.isRequired,
+  updateDriverLocation: PropTypes.func.isRequired,
   search: PropTypes.object.isRequired,
 };
 
@@ -125,6 +178,8 @@ const mapStateToProps = (state) => ({
   search: state.search,
 });
 
-export default connect(mapStateToProps, { getPiaByDriver, updatePiaStatus })(
-  Locations
-);
+export default connect(mapStateToProps, {
+  getPiaByDriver,
+  updateDriverLocation,
+  updatePiaStatus,
+})(Locations);

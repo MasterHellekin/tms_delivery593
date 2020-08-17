@@ -5,6 +5,7 @@ import {
   GET_DRIVERS_FAIL,
   REGISTER_DRIVER_FAIL,
   REGISTER_DRIVER_SUCCESS,
+  UPDATE_LOCATION_DRIVER,
 } from "./types";
 import { setAlert } from "./alert";
 
@@ -43,6 +44,26 @@ export const getDriversByUser = () => async (dispatch) => {
     const res = await axios.get("/api/drivers/drivers");
     dispatch({
       type: GET_DRIVERS_BY_USER,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_DRIVERS_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const updateDriverLocation = (id, formData) => async (dispatch) => {
+  try {
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+
+    const res = await axios.put(`/api/drivers/${id}`, formData, config);
+
+    dispatch({
+      type: UPDATE_LOCATION_DRIVER,
       payload: res.data,
     });
   } catch (err) {

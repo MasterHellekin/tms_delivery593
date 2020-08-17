@@ -3,6 +3,7 @@ import {
   GET_DRIVERS_FAIL,
   REGISTER_DRIVER_SUCCESS,
   REGISTER_DRIVER_FAIL,
+  UPDATE_LOCATION_DRIVER,
 } from "../actions/types";
 
 const initialState = {
@@ -16,6 +17,7 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case REGISTER_DRIVER_SUCCESS:
+    case UPDATE_LOCATION_DRIVER:
       return {
         ...state,
         driver: payload,

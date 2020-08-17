@@ -12,7 +12,7 @@ const ShowMapDrivers = ({ getDriversByUser, driver: { drivers, loading } }) => {
 
   return (
     <Fragment>
-      <Map center={[0, 0]} zoom={15}>
+      <Map center={[-1.24908, -78.61675]} zoom={15}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -21,7 +21,9 @@ const ShowMapDrivers = ({ getDriversByUser, driver: { drivers, loading } }) => {
           <Marker
             key={thedriver.id}
             position={[thedriver.ultLatitud, thedriver.ultLongitud]}
-          ></Marker>
+          >
+            <Popup>Nombre conductor: {thedriver.nomCon}</Popup>
+          </Marker>
         ))}
       </Map>
     </Fragment>
